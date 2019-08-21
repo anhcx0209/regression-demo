@@ -12,6 +12,10 @@ export class AppComponent {
   title = 'regression-demo';
   isLoading = false;
 
+  chart1 = null;
+  chart2 = null;
+  chart3 = null;
+
   constructor(@Inject(PLATFORM_ID) private platformId: any, private apiServ: ApiServiceService) {
   }
 
@@ -109,11 +113,12 @@ export class AppComponent {
     };
 
     const ctx = canvas.nativeElement.getContext('2d');
-    const chart = new Chart(ctx, {
+    let chart = new Chart(ctx, {
       type: 'line',
       data: chartData,
       options: this.defaultOpts
     });
+    return chart;
   }
 
   /**
@@ -132,22 +137,29 @@ export class AppComponent {
   }
 
   clearCanvases() {
+    if (this.chart1 != null) {
+      this.chart1.destroy();
+      this.chart2.destroy();
+      this.chart3.destroy();
+    }
+
     const ctx1 = this.canvas1.nativeElement.getContext('2d');
     ctx1.clearRect(0, 0, this.canvas1.nativeElement.width, this.canvas1.nativeElement.height);
     const ctx2 = this.canvas1.nativeElement.getContext('2d');
-    ctx2.clearRect(0, 0, this.canvas1.nativeElement.width, this.canvas1.nativeElement.height);
+    ctx2.clearRect(0, 0, this.canvas2.nativeElement.width, this.canvas1.nativeElement.height);
     const ctx3 = this.canvas1.nativeElement.getContext('2d');
-    ctx3.clearRect(0, 0, this.canvas1.nativeElement.width, this.canvas1.nativeElement.height);
+    ctx3.clearRect(0, 0, this.canvas3.nativeElement.width, this.canvas1.nativeElement.height);
   }
 
   showReport(id) {
     this.isLoading = true;
     this.clearCanvases();
-    this.apiServ.getPlotCached(+id).subscribe(
+    const newId = +id - 1;
+    this.apiServ.getPlotData(newId).subscribe(
       val => {
-        this.drawForecast(val.one_step_ahead, val.raw_data[0], val.raw_data[1], this.canvas1);
-        this.drawForecast(val.dynamic_forecast, val.raw_data[0], val.raw_data[1], this.canvas2);
-        this.drawForecast(val['200_forecast'], val.raw_data[0], val.raw_data[1], this.canvas3);
+        this.chart1 = this.drawForecast(val.one_step_ahead, val.raw_data[0], val.raw_data[1], this.canvas1);
+        this.chart2 = this.drawForecast(val.dynamic_forecast, val.raw_data[0], val.raw_data[1], this.canvas2);
+        this.chart3 = this.drawForecast(val['200_forecast'], val.raw_data[0], val.raw_data[1], this.canvas3);
       }, error => {},
       () => {
         this.isLoading = false;
