@@ -189,7 +189,7 @@ export class AppComponent {
     this.isLoading = true;
     this.clearCanvases();
     const newId = +id - 1;
-    this.apiServ.getPlotCached(newId).subscribe(
+    this.apiServ.getPlotData(newId).subscribe(
       val => {
         this.drawRaw(val.raw_data[0], val.raw_data[1], this.canvas0);
         this.chart1 = this.drawForecast(val.one_step_ahead, val.raw_data[0], val.raw_data[1], this.canvas1);
