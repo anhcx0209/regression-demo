@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CACHED_DATA } from './CachedData';
+import { of } from 'rxjs';
 
 
 @Injectable({
@@ -14,18 +16,22 @@ export class ApiServiceService {
   getPlotData(id) {
     const samples = [
       {
-        index: "co2",
-        time_field: "date",
-        value_field: "co2"
+        index: 'co2',
+        time_field: 'date',
+        value_field: 'co2'
       },
       {
-        index: "co2",
-        time_field: "date",
-        value_field: "co2"
+        index: 'co2',
+        time_field: 'date',
+        value_field: 'co2'
       }
     ];
-    
-    return this.http.post(this.baseUrl, samples[+id])
+
+    return this.http.post<any>(this.baseUrl, samples[+id]);
+  }
+
+  getPlotCached() {
+    return of(CACHED_DATA);
   }
 
 

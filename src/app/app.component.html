@@ -2,7 +2,7 @@
 <div style="text-align:center">
   <h1>
     Welcome to {{ title }}!
-  </h1>  
+  </h1>
 </div>
 <h2>Select Demo Data: </h2>
 <ul>
@@ -11,10 +11,25 @@
   </li>
   <li>
     <h2><a (click)="showReport(2)">Number of visting customer</a></h2>
-  </li>  
+  </li>
 </ul>
+
 <div>
-  <canvas width="100%" height="20px" #mycanvas></canvas>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <h3>One-Step Ahead Forecast</h3>
+  <canvas width="100%" height="20px" #cnv1></canvas>
+</div>
+
+<div>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <h3>Dynamic Forecast</h3>
+  <canvas width="100%" height="20px" #cnv2></canvas>
+</div>
+
+<div>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <h3>200 forecast</h3>
+  <canvas width="100%" height="20px" #cnv3></canvas>
 </div>
 
 <router-outlet></router-outlet>
