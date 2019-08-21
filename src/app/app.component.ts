@@ -1,5 +1,4 @@
 import { Component, ElementRef, ViewChild, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 import Chart from 'chart.js';
 import { ApiServiceService } from './api-service.service';
 import * as _ from 'lodash';
@@ -132,9 +131,19 @@ export class AppComponent {
     return points;
   }
 
+  clearCanvases() {
+    const ctx1 = this.canvas1.nativeElement.getContext('2d');
+    ctx1.clearRect(0, 0, this.canvas1.nativeElement.width, this.canvas1.nativeElement.height);
+    const ctx2 = this.canvas1.nativeElement.getContext('2d');
+    ctx2.clearRect(0, 0, this.canvas1.nativeElement.width, this.canvas1.nativeElement.height);
+    const ctx3 = this.canvas1.nativeElement.getContext('2d');
+    ctx3.clearRect(0, 0, this.canvas1.nativeElement.width, this.canvas1.nativeElement.height);
+  }
+
   showReport(id) {
     this.isLoading = true;
-    this.apiServ.getPlotCached().subscribe(
+    this.clearCanvases();
+    this.apiServ.getPlotCached(+id).subscribe(
       val => {
         this.drawForecast(val.one_step_ahead, val.raw_data[0], val.raw_data[1], this.canvas1);
         this.drawForecast(val.dynamic_forecast, val.raw_data[0], val.raw_data[1], this.canvas2);

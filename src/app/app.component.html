@@ -1,35 +1,38 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-</div>
-<h2>Select Demo Data: </h2>
-<ul>
-  <li>
-    <h2><a (click)="showReport(1)">CO2 Level</a></h2>
-  </li>
-  <li>
-    <h2><a (click)="showReport(2)">Number of visting customer</a></h2>
-  </li>
-</ul>
+<div class="container">
+  <div style="text-align:center">
+    <h1>
+      Welcome to {{ title }}!
+    </h1>
+  </div>
+  <h2>Select Demo Data: </h2>
+  <ul>
+    <li>
+      <h2><a (click)="showReport(1)">CO2 Level</a></h2>
+    </li>
+    <li>
+      <h2><a (click)="showReport(2)">Number of visting customer</a></h2>
+    </li>
+  </ul>
 
-<div>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <h3>One-Step Ahead Forecast</h3>
-  <canvas width="100%" height="20px" #cnv1></canvas>
+  <div>
+    <h3>One-Step Ahead Forecast</h3>
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+    <canvas width="100%" height="20px" #cnv1></canvas>
+  </div>
+
+  <div>
+    <h3>Dynamic Forecast</h3>
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+    <canvas width="100%" height="20px" #cnv2></canvas>
+  </div>
+
+  <div>
+    <h3>200 forecast</h3>
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+    <canvas width="100%" height="20px" #cnv3></canvas>
+  </div>
 </div>
 
-<div>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <h3>Dynamic Forecast</h3>
-  <canvas width="100%" height="20px" #cnv2></canvas>
-</div>
-
-<div>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <h3>200 forecast</h3>
-  <canvas width="100%" height="20px" #cnv3></canvas>
-</div>
 
 <router-outlet></router-outlet>
