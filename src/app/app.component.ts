@@ -202,13 +202,13 @@ export class AppComponent {
     }
 
     const ctx0 = this.canvas0.nativeElement.getContext('2d');
-    ctx0.clearRect(0, 0, this.canvas0.nativeElement.width, this.canvas1.nativeElement.height);
+    ctx0.clearRect(0, 0, this.canvas0.nativeElement.width, this.canvas0.nativeElement.height);
     const ctx1 = this.canvas1.nativeElement.getContext('2d');
     ctx1.clearRect(0, 0, this.canvas1.nativeElement.width, this.canvas1.nativeElement.height);
     const ctx2 = this.canvas1.nativeElement.getContext('2d');
-    ctx2.clearRect(0, 0, this.canvas2.nativeElement.width, this.canvas1.nativeElement.height);
+    ctx2.clearRect(0, 0, this.canvas2.nativeElement.width, this.canvas2.nativeElement.height);
     const ctx3 = this.canvas1.nativeElement.getContext('2d');
-    ctx3.clearRect(0, 0, this.canvas3.nativeElement.width, this.canvas1.nativeElement.height);
+    ctx3.clearRect(0, 0, this.canvas3.nativeElement.width, this.canvas3.nativeElement.height);
   }
 
   showReport() {
