@@ -1,19 +1,36 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="container">
+<div class="container mt-5">
   <div style="text-align:center">
     <h1>
       Welcome to {{ title }}!
     </h1>
   </div>
-  <h2>Select Demo Data: </h2>
-  <ul>
-    <li>
-      <h2><a (click)="showReport(1)">CO2 Level</a></h2>
-    </li>
-    <li>
-      <h2><a (click)="showReport(2)">Number of visting customer</a></h2>
-    </li>
-  </ul>
+
+  <div class="row mt-5">
+    <div class="col-sm">
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Choose Indexes: </label>
+        <select class="custom-select" [(ngModel)]="selectedData">          
+          <option value="0">CO2 Levels</option>
+          <option value="1">Number of visitors</option>          
+        </select>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Index Object: </label>
+        <div>
+          <ngx-json-viewer [json]="someObject"></ngx-json-viewer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group">
+      <button type="button" class="btn btn-dark" (click)="showReport()">Run</button>
+    </div>
+  </div>
 
   <div>
     <h3>Raw data</h3>

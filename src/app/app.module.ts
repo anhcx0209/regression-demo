@@ -5,6 +5,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { FormsModule } from '@angular/forms';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
+
 
 
 @NgModule({
@@ -16,6 +19,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     AppRoutingModule,
     HttpClientModule,
     MatProgressBarModule,
+    FormsModule,
+    NgxJsonViewerModule,
     BrowserAnimationsModule
   ],
   providers: [],

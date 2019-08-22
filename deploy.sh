@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -rf dist dist2 ./dist2.tar.gz
+
 ng build --prod
 
 mv dist dist2

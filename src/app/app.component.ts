@@ -11,7 +11,21 @@ import * as _ from 'lodash';
 export class AppComponent {
   title = 'regression-demo';
   isLoading = false;
+  selectedData = 0;
 
+  samples = [
+    {
+      index: 'co2',
+      time_field: 'date',
+      value_field: 'co2'
+    },
+    {
+      index: 'visit_customers',
+      time_field: 'month',
+      value_field: 'no_customer'
+    }
+  ];
+  chart0 = null;
   chart1 = null;
   chart2 = null;
   chart3 = null;
@@ -20,13 +34,13 @@ export class AppComponent {
   }
 
   // one step ahead
-  @ViewChild('cnv1', {static: false}) canvas1: ElementRef;
+  @ViewChild('cnv1', { static: false }) canvas1: ElementRef;
   // 200 forecast
-  @ViewChild('cnv2', {static: false}) canvas2: ElementRef;
+  @ViewChild('cnv2', { static: false }) canvas2: ElementRef;
   // dynamic_forecast
-  @ViewChild('cnv3', {static: false}) canvas3: ElementRef;
+  @ViewChild('cnv3', { static: false }) canvas3: ElementRef;
   // raw data
-  @ViewChild('cnv0', {static: false}) canvas0: ElementRef;
+  @ViewChild('cnv0', { static: false }) canvas0: ElementRef;
 
   defaultOpts: any = {
     cutoutPercentage: 70,
@@ -123,6 +137,15 @@ export class AppComponent {
     return chart;
   }
 
+
+  get someObject() {
+    try {
+      return this.samples[this.selectedData];
+    } catch (error) {
+      return {};
+    }
+  }
+
   drawRaw(rawDataLabels, rawDataPoint, canvas: ElementRef) {
     const mapDataRaw = this.toPoints(rawDataLabels, rawDataPoint);
     const chartData: any = {
@@ -172,11 +195,14 @@ export class AppComponent {
 
   clearCanvases() {
     if (this.chart1 != null) {
+      this.chart0.destroy();
       this.chart1.destroy();
       this.chart2.destroy();
       this.chart3.destroy();
     }
 
+    const ctx0 = this.canvas0.nativeElement.getContext('2d');
+    ctx0.clearRect(0, 0, this.canvas0.nativeElement.width, this.canvas1.nativeElement.height);
     const ctx1 = this.canvas1.nativeElement.getContext('2d');
     ctx1.clearRect(0, 0, this.canvas1.nativeElement.width, this.canvas1.nativeElement.height);
     const ctx2 = this.canvas1.nativeElement.getContext('2d');
@@ -185,17 +211,19 @@ export class AppComponent {
     ctx3.clearRect(0, 0, this.canvas3.nativeElement.width, this.canvas1.nativeElement.height);
   }
 
-  showReport(id) {
+  showReport() {
     this.isLoading = true;
     this.clearCanvases();
-    const newId = +id - 1;
-    this.apiServ.getPlotData(newId).subscribe(
+    this.apiServ.getPlotData(this.samples[this.selectedData]).subscribe(
       val => {
-        this.drawRaw(val.raw_data[0], val.raw_data[1], this.canvas0);
+        this.chart0 = this.drawRaw(val.raw_data[0], val.raw_data[1], this.canvas0);
         this.chart1 = this.drawForecast(val.one_step_ahead, val.raw_data[0], val.raw_data[1], this.canvas1);
         this.chart2 = this.drawForecast(val.dynamic_forecast, val.raw_data[0], val.raw_data[1], this.canvas2);
         this.chart3 = this.drawForecast(val['200_forecast'], val.raw_data[0], val.raw_data[1], this.canvas3);
-      }, error => {},
+      }, error => {
+        alert(error);
+        this.isLoading = false;
+      },
       () => {
         this.isLoading = false;
       }
