@@ -9,7 +9,7 @@ import { of, throwError } from 'rxjs';
 })
 export class ApiServiceService {
 
-  baseUrl = 'http://35.243.224.36:5000/data_analytics/SARMA_regression';
+  baseUrl = 'https://35.243.224.36:5000/data_analytics/SARMA_regression';
 
   constructor(private http: HttpClient) {
   }
